@@ -54,6 +54,7 @@ func Run() {
 	api.Migrate()
 
 	// Init gin engine
+	gin.SetMode(gin.ReleaseMode)
 	api.App = gin.Default()
 	api.Routes()
 

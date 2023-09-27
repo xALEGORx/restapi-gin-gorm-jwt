@@ -1,17 +1,16 @@
 package core
 
-import "github.com/gin-gonic/gin"
-
-func ping(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
-}
+import (
+	"restapi/handlers"
+	"restapi/middlewares"
+)
 
 func (api *Api) Routes() {
 	r := api.App.Group("/api/v1")
 
+	r.Use(middlewares.Handler(api.Db, api.Log))
+	r.Use(middlewares.ErrorHandler())
 	{
-		r.GET("/ping", ping)
+		r.GET("/ping", handlers.Ping)
 	}
 }
