@@ -10,6 +10,8 @@ func (api *Api) Routes() {
 
 	r.Use(middlewares.Handler(api.Db, api.Log))
 	r.Use(middlewares.ErrorHandler())
+	r.Use(middlewares.Cors())
+
 	{
 		r.GET("/ping", handlers.Ping)
 	}
