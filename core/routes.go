@@ -14,5 +14,7 @@ func (api *Api) Routes() {
 
 	{
 		r.GET("/ping", handlers.Ping)
+		r.POST("/login", handlers.Login)
+		r.POST("/register", handlers.Register)
 	}
 }

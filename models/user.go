@@ -1,8 +1,13 @@
 package models
 
 import (
+	"os"
 	"restapi/types"
+	"strconv"
 	"time"
+
+	"github.com/golang-jwt/jwt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -20,4 +25,21 @@ func (u *User) PrepareToView() types.JSON {
 		"name":  u.Name,
 		"email": u.Email,
 	}
+}
+
+func (u *User) CheckPassword(password string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password)) == nil
+}
+
+func (u *User) GenerateToken() (string, error) {
+	expire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
+	date := time.Now().Add(time.Second * time.Duration(expire))
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user": u.PrepareToView(),
+		"exp":  date.Unix(),
+	})
+
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT")))
+	return tokenString, err
 }
