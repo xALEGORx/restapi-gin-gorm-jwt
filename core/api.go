@@ -51,6 +51,7 @@ func Run() {
 	if err != nil {
 		log.Fatalf("failed connection database: %s", err.Error())
 	}
+	api.Migrate()
 
 	// Init gin engine
 	api.App = gin.Default()
