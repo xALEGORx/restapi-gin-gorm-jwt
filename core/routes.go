@@ -17,4 +17,10 @@ func (api *Api) Routes() {
 		r.POST("/login", handlers.Login)
 		r.POST("/register", handlers.Register)
 	}
+
+	user := r.Group("/user")
+	user.Use(middlewares.Authorized)
+	{
+		user.GET("/me", handlers.Me)
+	}
 }

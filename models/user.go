@@ -36,7 +36,7 @@ func (u *User) GenerateToken() (string, error) {
 	date := time.Now().Add(time.Second * time.Duration(expire))
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user": u.PrepareToView(),
+		"user": u.ID,
 		"exp":  date.Unix(),
 	})
 
