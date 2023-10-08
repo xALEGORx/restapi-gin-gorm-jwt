@@ -91,7 +91,7 @@ The answer then will be:
 ```
 {
     "success": false,
-    "error": "user does not exist"
+    "error": "wrong login or password"
 }
 ```
 
